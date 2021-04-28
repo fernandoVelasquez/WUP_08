@@ -11,7 +11,7 @@
 
 <meta name="author" content="Fernando D Velasquez" />
 
-<meta name="date" content="2021-04-12" />
+<meta name="date" content="2021-04-27" />
 
 <title>simpleRegress</title>
 
@@ -167,16 +167,64 @@ pre code {
 
 <h1 class="title toc-ignore">simpleRegress</h1>
 <h4 class="author">Fernando D Velasquez</h4>
-<h4 class="date">April 12, 2021</h4>
+<h4 class="date">April 27, 2021</h4>
 
 </div>
 
+<div id="TOC">
+<ul>
+<li><a href="#make-a-simple-regression-model">make a simple regression model</a></li>
+<li><a href="#neck">Neck</a>
+<ul>
+<li><a href="#model-length-neck-this-is-an-example">Model LENGTH ~ NECK this is an example</a></li>
+<li><a href="#now-predict-the-length-of-a-bear-who-has-a-neck-of-17-22-and-26">now predict the length of a bear who has a neck of 17, 22 and 26</a></li>
+<li><a href="#surely-there-is-another-variable-that-can-better-predict-length-than-neck.-find-one-and-compare-its-performance-to-that-of-neck-by-it-value-of-adjusted-rsquared-bigger-is-better.">Surely there is another variable that can better predict LENGTH than NECK. Find one and compare its performance to that of neck by it value of Adjusted-Rsquared (bigger is better).</a></li>
+</ul></li>
+<li><a href="#weight">Weight</a>
+<ul>
+<li><a href="#model">Model</a>
+<ul>
+<li><a href="#prediction">Prediction</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#chest">Chest</a>
+<ul>
+<li><a href="#model-1">Model</a>
+<ul>
+<li><a href="#prediction-1">Prediction</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#age">Age</a>
+<ul>
+<li><a href="#model-2">Model</a>
+<ul>
+<li><a href="#prediction-2">Prediction</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#headlen">Headlen</a>
+<ul>
+<li><a href="#model-3">Model</a>
+<ul>
+<li><a href="#prediction-3">Prediction</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#headwidth">HeadWidth</a>
+<ul>
+<li><a href="#model-4">Model</a>
+<ul>
+<li><a href="#prediction-4">Prediction</a></li>
+</ul></li>
+</ul></li>
+</ul>
+</div>
 
-<div id="make-a-simple-regression-model" class="section level2">
-<h2>make a simple regression model</h2>
+<div id="make-a-simple-regression-model" class="section level3">
+<h3>make a simple regression model</h3>
 <pre class="r"><code>bears &lt;- read.csv(file=&quot;BEARS.csv&quot;,header = TRUE)
 bears$SEX &lt;-as.factor(bears$SEX)</code></pre>
 </div>
+<div id="neck" class="section level1">
+<h1>Neck</h1>
 <div id="model-length-neck-this-is-an-example" class="section level2">
 <h2>Model LENGTH ~ NECK this is an example</h2>
 <pre class="r"><code>simp &lt;- lm(LENGTH~NECK,data=bears)
@@ -226,6 +274,12 @@ predict(simp,new)</code></pre>
 </div>
 <div id="surely-there-is-another-variable-that-can-better-predict-length-than-neck.-find-one-and-compare-its-performance-to-that-of-neck-by-it-value-of-adjusted-rsquared-bigger-is-better." class="section level2">
 <h2>Surely there is another variable that can better predict LENGTH than NECK. Find one and compare its performance to that of neck by it value of Adjusted-Rsquared (bigger is better).</h2>
+</div>
+</div>
+<div id="weight" class="section level1">
+<h1>Weight</h1>
+<div id="model" class="section level2">
+<h2>Model</h2>
 <pre class="r"><code>WeightModel &lt;- lm(LENGTH~WEIGHT,data=bears)
 plot(LENGTH~WEIGHT,data=bears)
 abline(WeightModel)</code></pre>
@@ -249,6 +303,34 @@ abline(WeightModel)</code></pre>
 ## Residual standard error: 5.432 on 52 degrees of freedom
 ## Multiple R-squared:  0.7472, Adjusted R-squared:  0.7423 
 ## F-statistic: 153.7 on 1 and 52 DF,  p-value: &lt; 2.2e-16</code></pre>
+<p>Adjusted R-squared: 0.7423 and p value is 2.2e-16.</p>
+<div id="prediction" class="section level3">
+<h3>Prediction</h3>
+<pre class="r"><code>new &lt;- data.frame(WEIGHT=bears$WEIGHT [c(5,15,23)])
+predict(WeightModel,new)</code></pre>
+<pre><code>##        1        2        3 
+## 57.33408 52.70159 51.56245</code></pre>
+<pre class="r"><code>predict(WeightModel,new,se.fit=TRUE)</code></pre>
+<pre><code>## $fit
+##        1        2        3 
+## 57.33408 52.70159 51.56245 
+## 
+## $se.fit
+##         1         2         3 
+## 0.7463850 0.8797934 0.9328246 
+## 
+## $df
+## [1] 52
+## 
+## $residual.scale
+## [1] 5.431842</code></pre>
+</div>
+</div>
+</div>
+<div id="chest" class="section level1">
+<h1>Chest</h1>
+<div id="model-1" class="section level2">
+<h2>Model</h2>
 <pre class="r"><code>ChestModel &lt;- lm(LENGTH~CHEST,data=bears)
 plot(LENGTH~CHEST,data=bears)
 abline(ChestModel)</code></pre>
@@ -272,6 +354,34 @@ abline(ChestModel)</code></pre>
 ## Residual standard error: 4.939 on 52 degrees of freedom
 ## Multiple R-squared:  0.791,  Adjusted R-squared:  0.7869 
 ## F-statistic: 196.7 on 1 and 52 DF,  p-value: &lt; 2.2e-16</code></pre>
+<p>The Adjusted R-squared is 0.7869 and the P value is 2.2e-16.</p>
+<div id="prediction-1" class="section level3">
+<h3>Prediction</h3>
+<pre class="r"><code>new &lt;- data.frame(CHEST= bears$CHEST [c(5,15,23)])
+predict(ChestModel,new)</code></pre>
+<pre><code>##        1        2        3 
+## 57.94200 51.83603 50.81837</code></pre>
+<pre class="r"><code>predict(ChestModel,new,se.fit=TRUE)</code></pre>
+<pre><code>## $fit
+##        1        2        3 
+## 57.94200 51.83603 50.81837 
+## 
+## $se.fit
+##         1         2         3 
+## 0.6738885 0.8279463 0.8722973 
+## 
+## $df
+## [1] 52
+## 
+## $residual.scale
+## [1] 4.939419</code></pre>
+</div>
+</div>
+</div>
+<div id="age" class="section level1">
+<h1>Age</h1>
+<div id="model-2" class="section level2">
+<h2>Model</h2>
 <pre class="r"><code>AgeModel &lt;- lm(LENGTH~AGE,data=bears)
 plot(LENGTH~AGE,data=bears)
 abline(AgeModel)</code></pre>
@@ -295,6 +405,34 @@ abline(AgeModel)</code></pre>
 ## Residual standard error: 7.511 on 52 degrees of freedom
 ## Multiple R-squared:  0.5166, Adjusted R-squared:  0.5073 
 ## F-statistic: 55.58 on 1 and 52 DF,  p-value: 9.314e-10</code></pre>
+<p>The Adjusted R-squared is 0.5073 and the p value is 9.314e-10.</p>
+<div id="prediction-2" class="section level3">
+<h3>Prediction</h3>
+<pre class="r"><code>new &lt;- data.frame(AGE=bears$AGE [c(5,15,23)])
+predict(AgeModel,new)</code></pre>
+<pre><code>##        1        2        3 
+## 72.41217 53.25222 53.48031</code></pre>
+<pre class="r"><code>predict(AgeModel,new,se.fit=TRUE)</code></pre>
+<pre><code>## $fit
+##        1        2        3 
+## 72.41217 53.25222 53.48031 
+## 
+## $se.fit
+##        1        2        3 
+## 2.113980 1.249987 1.232628 
+## 
+## $df
+## [1] 52
+## 
+## $residual.scale
+## [1] 7.510906</code></pre>
+</div>
+</div>
+</div>
+<div id="headlen" class="section level1">
+<h1>Headlen</h1>
+<div id="model-3" class="section level2">
+<h2>Model</h2>
 <pre class="r"><code>HeadLengthModel &lt;- lm(LENGTH~HEADLEN,data=bears)
 plot(LENGTH~NECK,data=bears)
 abline(HeadLengthModel)</code></pre>
@@ -318,6 +456,33 @@ abline(HeadLengthModel)</code></pre>
 ## Residual standard error: 4.235 on 52 degrees of freedom
 ## Multiple R-squared:  0.8463, Adjusted R-squared:  0.8434 
 ## F-statistic: 286.3 on 1 and 52 DF,  p-value: &lt; 2.2e-16</code></pre>
+<div id="prediction-3" class="section level3">
+<h3>Prediction</h3>
+<pre class="r"><code>new &lt;- data.frame(HEADLEN=bears$HEADLEN [c(5,15,23)])
+predict(HeadLengthModel,new)</code></pre>
+<pre><code>##        1        2        3 
+## 70.30793 51.94202 58.82924</code></pre>
+<pre class="r"><code>predict(HeadLengthModel,new,se.fit=TRUE)</code></pre>
+<pre><code>## $fit
+##        1        2        3 
+## 70.30793 51.94202 58.82924 
+## 
+## $se.fit
+##         1         2         3 
+## 0.8997321 0.6983951 0.5764793 
+## 
+## $df
+## [1] 52
+## 
+## $residual.scale
+## [1] 4.235234</code></pre>
+</div>
+</div>
+</div>
+<div id="headwidth" class="section level1">
+<h1>HeadWidth</h1>
+<div id="model-4" class="section level2">
+<h2>Model</h2>
 <pre class="r"><code>HeadWthModel &lt;- lm(LENGTH~HEADWTH,data=bears)
 plot(LENGTH~HEADWTH,data=bears)
 abline(HeadWthModel)</code></pre>
@@ -341,8 +506,31 @@ abline(HeadWthModel)</code></pre>
 ## Residual standard error: 7.32 on 52 degrees of freedom
 ## Multiple R-squared:  0.5409, Adjusted R-squared:  0.5321 
 ## F-statistic: 61.26 on 1 and 52 DF,  p-value: 2.392e-10</code></pre>
-<p>##SUMMARY</p>
+<p>Adjusted R-squared is 0.5321 and the P value is 2.392e-10.</p>
+<div id="prediction-4" class="section level3">
+<h3>Prediction</h3>
+<pre class="r"><code>new &lt;- data.frame(HEADWTH=bears$HEADWTH [c(5,15,23)])
+predict(HeadWthModel,new)</code></pre>
+<pre><code>##        1        2        3 
+## 60.20680 52.40071 52.40071</code></pre>
+<pre class="r"><code>predict(HeadWthModel,new,se.fit=TRUE)</code></pre>
+<pre><code>## $fit
+##        1        2        3 
+## 60.20680 52.40071 52.40071 
+## 
+## $se.fit
+##        1        2        3 
+## 1.016647 1.273975 1.273975 
+## 
+## $df
+## [1] 52
+## 
+## $residual.scale
+## [1] 7.320107</code></pre>
+<p>#SUMMARY</p>
 <p>We can conclude after creating 5 different models that the best model for predicting Bears length is Head length. The models has an r squared of 0.8434 making it have an 84% of error been explained by the mean model.The residual error is 4.235 for head length.</p>
+</div>
+</div>
 </div>
 
 
