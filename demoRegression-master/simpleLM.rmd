@@ -2,19 +2,23 @@
 title: "simpleRegress"
 author: "Fernando D Velasquez"
 date: "April 12, 2021"
-output: html_document
+output: 
+  html_document:
+    toc: true
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-## make a simple regression model
+### make a simple regression model
 
 ```{r}
 bears <- read.csv(file="BEARS.csv",header = TRUE)
 bears$SEX <-as.factor(bears$SEX)
 ```
+
+# Neck
 
 ## Model LENGTH ~ NECK  this is an example  
 
@@ -35,26 +39,38 @@ predict(simp,new,se.fit=TRUE)
 ```
 ## Surely there is another variable that can better predict LENGTH than NECK. Find one and compare its performance to that of neck by it value of Adjusted-Rsquared (bigger is better).
 
+
+# Weight
+
 ```{r}
 WeightModel <- lm(LENGTH~WEIGHT,data=bears)
 plot(LENGTH~WEIGHT,data=bears)
 abline(WeightModel)
 summary.lm(WeightModel)
 ```
+Adjusted R-squared:  0.7423  and p value is 2.2e-16.  
 
+# Chest
 ```{r}
 ChestModel <- lm(LENGTH~CHEST,data=bears)
 plot(LENGTH~CHEST,data=bears)
 abline(ChestModel)
 summary.lm(ChestModel)
 ```
-  
+
+The Adjusted R-squared is 0.7869 and the P value is 2.2e-16.   
+
+# Age  
 ```{r}
 AgeModel <- lm(LENGTH~AGE,data=bears)
 plot(LENGTH~AGE,data=bears)
 abline(AgeModel)
 summary.lm(AgeModel)
 ```
+
+The Adjusted R-squared is 0.5073 and the p value is 9.314e-10.   
+
+# Headlen
 ```{r}
 HeadLengthModel <- lm(LENGTH~HEADLEN,data=bears)
 plot(LENGTH~NECK,data=bears)
@@ -62,12 +78,15 @@ abline(HeadLengthModel)
 summary.lm(HeadLengthModel)
 ```
 
+# HeadWidth
 ```{r}
 HeadWthModel <- lm(LENGTH~HEADWTH,data=bears)
 plot(LENGTH~HEADWTH,data=bears)
 abline(HeadWthModel)
 summary.lm(HeadWthModel)
 ```
+
+Adjusted R-squared is 0.5321 and the P value is 2.392e-10.
 
 
 ##SUMMARY
