@@ -29,6 +29,7 @@ abline(simp)
 summary.lm(simp)
 ```
 
+
 ## now predict the length of a bear who has a neck of 17, 22 and 26
 
 
@@ -42,6 +43,8 @@ predict(simp,new,se.fit=TRUE)
 
 # Weight
 
+## Model
+
 ```{r}
 WeightModel <- lm(LENGTH~WEIGHT,data=bears)
 plot(LENGTH~WEIGHT,data=bears)
@@ -50,7 +53,16 @@ summary.lm(WeightModel)
 ```
 Adjusted R-squared:  0.7423  and p value is 2.2e-16.  
 
+### Prediction
+```{r}
+new <- data.frame(WEIGHT=bears$WEIGHT [c(5,15,23)])
+predict(WeightModel,new)
+predict(WeightModel,new,se.fit=TRUE)
+```
+
 # Chest
+
+## Model
 ```{r}
 ChestModel <- lm(LENGTH~CHEST,data=bears)
 plot(LENGTH~CHEST,data=bears)
@@ -60,7 +72,17 @@ summary.lm(ChestModel)
 
 The Adjusted R-squared is 0.7869 and the P value is 2.2e-16.   
 
+### Prediction
+
+```{r}
+new <- data.frame(CHEST= bears$CHEST [c(5,15,23)])
+predict(ChestModel,new)
+predict(ChestModel,new,se.fit=TRUE)
+```
 # Age  
+
+## Model
+
 ```{r}
 AgeModel <- lm(LENGTH~AGE,data=bears)
 plot(LENGTH~AGE,data=bears)
@@ -70,7 +92,17 @@ summary.lm(AgeModel)
 
 The Adjusted R-squared is 0.5073 and the p value is 9.314e-10.   
 
+### Prediction
+```{r}
+new <- data.frame(AGE=bears$AGE [c(5,15,23)])
+predict(AgeModel,new)
+predict(AgeModel,new,se.fit=TRUE)
+```
+
 # Headlen
+
+## Model
+
 ```{r}
 HeadLengthModel <- lm(LENGTH~HEADLEN,data=bears)
 plot(LENGTH~NECK,data=bears)
@@ -78,7 +110,17 @@ abline(HeadLengthModel)
 summary.lm(HeadLengthModel)
 ```
 
+### Prediction
+
+```{r}
+new <- data.frame(HEADLEN=bears$HEADLEN [c(5,15,23)])
+predict(HeadLengthModel,new)
+predict(HeadLengthModel,new,se.fit=TRUE)
+```
 # HeadWidth
+
+## Model
+
 ```{r}
 HeadWthModel <- lm(LENGTH~HEADWTH,data=bears)
 plot(LENGTH~HEADWTH,data=bears)
@@ -88,7 +130,16 @@ summary.lm(HeadWthModel)
 
 Adjusted R-squared is 0.5321 and the P value is 2.392e-10.
 
+### Prediction
 
-##SUMMARY
+```{r}
+new <- data.frame(HEADWTH=bears$HEADWTH [c(5,15,23)])
+predict(HeadWthModel,new)
+predict(HeadWthModel,new,se.fit=TRUE)
+```
+  
+  
+
+#SUMMARY
   
 We can conclude after creating 5 different models that the best model for predicting Bears length is Head length. The models has an r squared of 0.8434 making it have an 84% of error been explained by the mean model.The residual error is 4.235 for head length.
